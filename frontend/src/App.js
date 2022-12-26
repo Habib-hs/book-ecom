@@ -34,6 +34,7 @@ function App() {
         <Route element={<PrivateRoute/>}>
               <Route path='/user/dashboard' element={<Dashboard/>} />
        </Route>
+
        <Route element={<PrivateRoute/>}>
               <Route path='/profile/:userId' element={<Profile/>} />
        </Route>

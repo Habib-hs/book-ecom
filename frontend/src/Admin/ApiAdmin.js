@@ -7,9 +7,9 @@ exports.createCategory = async (userId, token, category) => {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          Authorization: ` ${token}`,
         },
-        body: JSON.stringify(category),
+        body: JSON.stringify(category ),
       }
     );
     return await response.json();

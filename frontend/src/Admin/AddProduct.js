@@ -14,6 +14,7 @@ const AddProduct = () => {
         shipping: '',
         quantity: '',
         photo: '',
+        discount: '',
         loading: false,
         error: '',
         createdProduct: '',
@@ -34,6 +35,7 @@ const AddProduct = () => {
         quantity,
         loading,
         error,
+        discount,
         createdProduct,
         redirectToProfile,
         formData
@@ -80,6 +82,7 @@ const AddProduct = () => {
                     photo: '',
                     price: '',
                     quantity: '',
+                    discount: '',
                     loading: false,
                     createdProduct: data.name
                 });
@@ -89,7 +92,7 @@ const AddProduct = () => {
 
     const newPostForm = () => (
         <form className="mb-3" onSubmit={clickSubmit}>
-            <h4>Post Photo</h4>
+            <h4 className='mt-5'>Post Photo</h4>
             <div className="form-group">
                 <label className="btn btn-secondary">
                     <input onChange={handleChange('photo')} type="file" name="photo" accept="image/*" />
@@ -109,6 +112,11 @@ const AddProduct = () => {
             <div className="form-group">
                 <label className="text-muted">Price</label>
                 <input onChange={handleChange('price')} type="number" className="form-control" value={price} />
+            </div>
+
+            <div className="form-group">
+                <label className="text-muted">Discount</label>
+                <input onChange={handleChange('discount')} type="number" className="form-control" value={discount} />
             </div>
 
             <div className="form-group">
@@ -138,7 +146,7 @@ const AddProduct = () => {
                 <input onChange={handleChange('quantity')} type="number" className="form-control" value={quantity} />
             </div>
 
-            <button className="btn btn-outline-primary">Create Product</button>
+            <button className="btn btn-outline-primary mt-2">Create Product</button>
         </form>
     );
 
@@ -163,7 +171,7 @@ const AddProduct = () => {
 
         const goBack = () => (
             <div className="mt-5">
-                <Link to="/admin/dashboard" className="text-warning">
+                <Link to="/admin/dashboard" className="text-primary text-bold">
                     Back to Dashboard
                 </Link>
             </div>

@@ -1,6 +1,7 @@
 import React from "react";
 import "../../style.css";
 import Menu from "../menu/Menu";
+import Footer from "../../pages/footer/Footer";
 
 const Layout = ({
     title = "Title",
@@ -15,6 +16,8 @@ const Layout = ({
             <p className="lead">{description}</p>
         </div>
         <div className={className}>{children}</div>
+    
+    <Footer className="mt-4" />
     </div>
 );
 

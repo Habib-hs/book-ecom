@@ -12,7 +12,7 @@ const token = user.token;
 const adminLinks = () => {
     return (
         <div className="card">
-            <h4 className="card-header">Admin Links</h4>
+            <h4 className="card-header bg-primary text-white">Admin Links</h4>
             <ul className="list-group">
                 <li className="list-group-item">
                     <Link className="nav-link" to="/category/create">
@@ -42,7 +42,7 @@ const adminLinks = () => {
 const adminInfo = () => {
     return (
         <div className="card mb-5">
-            <h3 className="card-header">Admin Information</h3>
+            <h3 className="card-header bg-primary text-white">Admin Information</h3>
             <ul className="list-group">
                 <li className="list-group-item">{user.name}</li>
                 <li className="list-group-item">{user.email}</li>
@@ -60,9 +60,11 @@ return (
         description={`G'day ${user.name}!`}
         className="container-fluid"
     >
-        <div className="row">
-            <div className="col-3">{adminLinks()}</div>
-            <div className="col-9">{adminInfo()}</div>
+        <div className='container'>
+        <div className="row mt-5">
+            <div className="col-3 mb-5">{adminLinks()}</div>
+            <div className="col-9 ">{adminInfo()}</div>
+        </div>
         </div>
     </Layout>
 );

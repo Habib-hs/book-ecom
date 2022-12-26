@@ -1,40 +1,88 @@
 /* eslint-disable no-unused-vars */
-import React,{useState, useEffect} from "react";
-import Layout from "../../component/layout/Layout";
-import {getProducts} from '../../component/ApiCore'
+import React, { useEffect, useState } from "react";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick-theme.css";
+import "slick-carousel/slick/slick.css";
+import { getProducts } from "../../component/ApiCore";
 import Card from "../../component/card/Card";
- import "../../style.css";
- import Search from "../../component/Search/Search";
+import Layout from "../../component/layout/Layout";
+import Search from "../../component/Search/Search";
+import "../../style.css";
+
+
+// const SampleNextArrow = (props) => {
+//   const { onClick } = props;
+//   return (
+//     <div className="control-btn " onClick={onClick}>
+//       <button className="next ">
+//         <i className="fa fa-long-arrow-alt-right"></i>
+//       </button>
+//     </div>
+//   );
+// };
+// const SamplePrevArrow = (props) => {
+//   const { onClick } = props;
+//   return (
+//     <div className="control-btn" onClick={onClick}>
+//       <button className="prev">
+//         <i className="fa fa-long-arrow-alt-left"></i>
+//       </button>
+//     </div>
+//   );
+// };
 
 function Home() {
   const [productsBySell, setProductsBySell] = useState([]);
-    const [productsByArrival, setProductsByArrival] = useState([]);
-    const [error, setError] = useState(false);
+  const [productsByArrival, setProductsByArrival] = useState([]);
+  const [productsByDiscount, setProductsByDiscount] = useState([]);
+  const [productsByFeatured, setProductsByFeatured] = useState([]);
+  const [error, setError] = useState(false);
 
-    const loadProductsBySell = () => {
-      getProducts('sold').then(data => {
-          if (data.error) {
-              setError(data.error);
-          } else {
-              setProductsBySell(data);
-          }
-      });
+  const settings = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 5,
+    slidesToScroll: 1,
+    // nextArrow: <SampleNextArrow />,
+    // prevArrow: <SamplePrevArrow />,
+  };
+
+  const loadProductsByDiscounts = () => {
+    getProducts("discount").then((data) => {
+      if (data.error) {
+        setError(data.error);
+      } else {
+        setProductsByDiscount(data);
+      }
+    });
+  };
+
+  const loadProductsBySell = () => {
+    getProducts("sold").then((data) => {
+      if (data.error) {
+        setError(data.error);
+      } else {
+        setProductsBySell(data);
+      }
+    });
   };
 
   const loadProductsByArrival = () => {
-      getProducts('createdAt').then(data => {
-         // console.log(data);
-          if (data.error) {
-              setError(data.error);
-          } else {
-              setProductsByArrival(data);
-          }
-      });
+    getProducts("createdAt").then((data) => {
+      // console.log(data);
+      if (data.error) {
+        setError(data.error);
+      } else {
+        setProductsByArrival(data);
+      }
+    });
   };
 
   useEffect(() => {
-      loadProductsByArrival();
-      loadProductsBySell();
+    loadProductsByArrival();
+    loadProductsBySell();
+    loadProductsByDiscounts();
   }, []);
 
   return (
@@ -43,24 +91,83 @@ function Home() {
       description="One Place where u will get all together."
       className="container-fluid"
     >
-        <Search/>
-     <h2 className="mb-4 mt-4 ">New Arrivals</h2>
-            <div className="row ">
-                {productsByArrival.map((product, i) => (
-                    <div key={i} className="col-2 mb-3">
-                        <Card product={product} />
-                    </div>
-                ))}
-            </div>
+      <Search />
 
-            <h2 className="mb-4 ">Best Sellers</h2>
-            <div className="row">
-                {productsBySell.map((product, i) => (
-                    <div key={i} className="col-2 mb-3">
-                        <Card product={product} />
-                    </div>
-                ))}
+      <div className="container">
+        {/* <h2 className=" mb-4 mt-4 ">Featured Product</h2>
+        <Slider {...settings}>
+            {productsByFeatured.map((product, i) => (
+              <div key={i} className="col-3 mb-3">
+                <Card product={product} />
+              </div>
+            ))}
+        </Slider> */}
+        <div className="row">
+        <h2 className="mb-4 mt-4 ">Flash Sells</h2>
+        <Slider {...settings}>
+
+          {productsByDiscount.map((product, i) => (
+            
+            <div key={i} >
+              <Card product={product} />
+            
             </div>
+          ))}
+           
+        </Slider>
+
+        {/* <div className="row">
+        <h2 className="mb-4 mt-4 ">New Arrivlas</h2>
+        <Slider {...settings}>
+
+          {productsByArrival.map((product, i) => (
+            
+            <div key={i} >
+              <Card product={product} />
+            
+            </div>
+          ))}
+           
+        </Slider> */}
+
+
+        {/* <div className="row">
+        <h2 className="mb-4 mt-4 ">Best Sellers</h2>
+        <Slider {...settings}>
+
+          {productsByDiscount.map((product, i) => (
+            
+            <div key={i} >
+              <Card product={product} />
+            
+            </div>
+          ))}
+           
+        </Slider> */}
+
+
+       
+        {/* <h2 className=" mb-4 mt-4 ">New Arrivals</h2>
+        <Slider {...settings}>
+          {productsByArrival.map((product, i) => (
+            <div key={i} className="col-3 mb-3">
+              <Card product={product} />
+            </div>
+          ))}
+        </Slider>
+
+        <h2 className=" mb-4 ">Best Sellers</h2>
+        <Slider {...settings}>
+          {productsBySell.map((product, i) => (
+            <div key={i} className="col-3 mb-3">
+              <Card product={product} />
+            </div>
+          ))}
+        </Slider> */}
+
+
+        </div>
+      </div>
     </Layout>
   );
 }

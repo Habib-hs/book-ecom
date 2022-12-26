@@ -16,8 +16,9 @@ function Signin() {
     password: "rrrrrr9",
     error: "",
     loading: false,
-    redirectToReferrer: false
+    redirectToReferrer: false,
 });
+const [validuser, setValidUser] = useState(true)
 const navigate = useNavigate() 
 const { name, password, loading, error, redirectToReferrer } = values;
 
@@ -27,6 +28,7 @@ const handleChange=(e)=>{
 
 const handleSubmit=(e)=>{
 e.preventDefault();
+setValues({ ...values, error: false, loading: true });
 
   fetch("http://127.0.0.1:9000/api/v1/login/", {
     method: "POST",
@@ -42,17 +44,22 @@ e.preventDefault();
     }),
   })
     .then((res) => res.json())
-    .then((data) => {
+    .then((data) => {  
       if (data.status === "success") {
         localStorage.setItem("user", JSON.stringify(data));
         setValues({
           ...values,
           redirectToReferrer: true
       });
-       // navigate("/")
+     
       
+      } else {
+        console.log(data)
+        setValues({ ...values, error: "Wrong username or password", loading: false });
+        console.log(values)
       }
-    });   
+    })
+    .catch( setValidUser(false))  
 }
 
 const user =   JSON.parse(localStorage.getItem("user")) 
@@ -70,13 +77,32 @@ const redirectUser = () => {
   }
 };
 
+const showLoading = () =>
+loading && (
+    <div className="alert alert-info">
+        <h2>Loading...</h2>
+    </div>
+);
+
+const showError = () => (
+  <div
+      className="alert alert-danger mt-3"
+      style={{ display: error ? "" : "none" }}
+  >
+      {error}
+  </div>
+);
 
 
   return (
-    <Layout title="SignIn" description='Signin here and start Order' 
-    className="container col-md-6 mt-5 offset-md-2">
+    <Layout title="SignIn" description='Signin here and start Order' >
       
-          <div>         
+          <div className='container' >  
+          <div className='row'>
+
+            <div className='col-6 align-self-center mt-5'  style={{"width": "50%", "height": "400px"}}>
+            {showLoading()}
+          {showError()}       
           <form onSubmit={handleSubmit}>
             <div className="form-group">
                 <label className="text-muted">Username</label>
@@ -101,14 +127,31 @@ const redirectUser = () => {
 
                 />
             </div>
-            <button type='submit' className="btn btn-primary">
+            <button type='submit' className="btn btn-primary mt-3">
                 Submit
             </button>
          </form>
+       
             {redirectUser()}
-          </div>
+            </div>
+             
+             <div className='col me-5 mt-2 p-5'>
+               <div className='bg-grey'>
+                       <h4>For Admin Login</h4>
+                       <p>Username : admin <br/>Password: admin </p>
 
-        
+                       <h4>For User Login</h4>
+                       <p>Username : habib <br/>Password: habib </p>
+                      
+                      
+               </div>
+             </div>
+
+
+
+
+          </div>
+          </div>
      
     </Layout>
   )

@@ -1,7 +1,8 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from "react";
 
-const RadioBox = ({ prices, handleFilters }) => {
+const DiscountRadioBox = ({ discounts, handleFilters }) => {
+    console.log(discounts)
     const [value, setValue] = useState(0);
 
     const handleChange = event => {
@@ -9,7 +10,7 @@ const RadioBox = ({ prices, handleFilters }) => {
         setValue(event.target.value);
     };
 
-    return prices.map((p, i) => (
+    return discounts.map((p, i) => (
         <div key={i} className="ml-5">
             <input
                 onChange={handleChange}
@@ -23,4 +24,4 @@ const RadioBox = ({ prices, handleFilters }) => {
     ));
 };
 
-export default RadioBox;
+export default DiscountRadioBox;
