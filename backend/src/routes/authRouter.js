@@ -2,7 +2,7 @@
 const express = require("express");
 const authController = require("../controller/authController");
 const router = express.Router();
-//const {verifyAdmin, verifyToken, verifyUser} = require("../utlis/")
+const {verifyAdmin, verifyToken, verifyUser} = require("../utlis/verifyToken")
 
 //  router.get("/chuthentieckacation", verifyToken, (req,res,next)=>{
 //   res.send("hello user, you are logged in")

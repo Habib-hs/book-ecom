@@ -6,9 +6,9 @@ const {verifyAdmin, verifyToken, verifyUser} = require("../utlis/verifyToken")
 
 
 
-router.get("/braintree/getToken/:userId", braintreeController.generateToken);
+router.get("/braintree/getToken/:userId",braintreeController.generateToken);
 router.post(
-    "/braintree/payment/:userId",
+    "/braintree/payment/:userId", verifyToken, verifyUser,
     braintreeController.processPayment
 );
 

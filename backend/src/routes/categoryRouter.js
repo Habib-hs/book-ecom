@@ -8,7 +8,7 @@ const {
 } = require("../utlis/verifyToken");
 
 router.post(
-  "/category/create/:userid",
+  "/category/create/:userid", verifyToken, verifyAdmin,
   categoryController.createCategory
 );
 router.get("/Category/:categoryId", categoryController.getCategory);

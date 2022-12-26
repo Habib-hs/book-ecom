@@ -59,7 +59,9 @@ exports.createProduct = async (req, res, next) => {
 
 exports.getProduct = async (req, res, next) => {
   try {
-    const product = await Product.findById(req.params.productId).populate("category");
+    const product = await Product.findById(req.params.productId).populate(
+      "category"
+    );
     // try {
     //   product.photo = undefined;
     // } catch (err) {
@@ -157,14 +159,14 @@ exports.updateProduct = async (req, res, next) => {
 exports.getProducts = async (req, res, next) => {
   let order = req.query.order ? req.query.order : "asc";
   let sortBy = req.query.sortBy ? req.query.sortBy : "_id";
-  let limit = req.query.limit ? parseInt(req.query.limit) : 4;
+  //let limit = req.query.limit ? parseInt(req.query.limit) : 4;
 
   try {
     const products = await Product.find()
       .select("-photo")
-      //.populate('category')
+      .populate("category")
       .sort([[sortBy, order]])
-      .limit(limit);
+      .limit(6);
 
     res.status(201).json(products);
   } catch (err) {
@@ -263,10 +265,9 @@ exports.listBySearch = (req, res) => {
 };
 
 exports.sendPhoto = async (req, res, next) => {
- 
   try {
     const product = await Product.findById(req.params.productId);
-   // console.log(product)
+    // console.log(product)
     if (product.photo.data) {
       res.set("Content-Type", product.photo.contentType);
       return res.send(product.photo.data);
@@ -281,7 +282,7 @@ exports.listSearch = (req, res) => {
   // create query object to hold search value and category value
   const query = {};
   // assign search value to query.name
-  console.log(query)
+  console.log(query);
   if (req.query.search) {
     query.name = { $regex: req.query.search, $options: "i" };
     // assigne category value to query.category
